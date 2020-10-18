@@ -3,14 +3,22 @@ import React, { Component } from 'react';
 
 import { View, Text } from 'react-native'
 
+import * as firebase from 'firebase'
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import * as firebase from 'firebase'
 
 import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Registro'
 import LoginScreen from './components/auth/Login'
+import MainScreen from './components/Main' 
+
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import rootReducer from './redux/reducers'
+import thunk from 'redux-thunk'
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const firebaseConfig = {
   apiKey: "AIzaSyDCkClsSgDUjm7RhSiZc6Jdhts59srQTdM",
@@ -79,11 +87,10 @@ export class App extends Component {
     }  
 
     return (
-      <view style={{ flex: 1, justifyContent: 'center' }}>
-          <text>El usuario ya inicioo</text>
-      </view>
+      <Provider store={store}>
+           <MainScreen />
+      </Provider>    
     )
-
   }
 }
 
