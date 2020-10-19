@@ -13,6 +13,7 @@ import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Registro'
 import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main' 
+import AddScreen from './components/main/Add'
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -91,6 +92,7 @@ export class App extends Component {
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Main">
                 <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="Add" component={AddScreen} />
             </Stack.Navigator> 
             </NavigationContainer>
       </Provider>    
