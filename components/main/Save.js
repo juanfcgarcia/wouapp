@@ -9,6 +9,9 @@ require("firebase/firebase-storage")
 
 export default function Save(props) {
     const [caption, setCaption] = useState("")
+    const [edad, setEdad] = useState("")
+    const [raza, setRaza] = useState("")
+    const [sexo, setSexo] = useState("")
 
     const uploadImage = async () => {
         const uri = props.route.params.image;
@@ -51,6 +54,9 @@ export default function Save(props) {
             .add({
                 downloadURL,
                 caption,
+                edad,
+                raza,
+                sexo,
                 creation: firebase.firestore.FieldValue.serverTimestamp()
             }).then((function () {
                 props.navigation.popToTop()
@@ -60,11 +66,22 @@ export default function Save(props) {
         <View style={{ flex: 1 }}>
             <Image source={{ uri: props.route.params.image }} />
             <TextInput
-                placeholder="Write a Caption . . ."
+                placeholder="Descripción . . ."
                 onChangeText={(caption) => setCaption(caption)}
             />
-
-            <Button title="Save" onPress={() => uploadImage()} />
+            <TextInput
+                placeholder="Edad . . ."
+                onChangeText={(edad) => setEdad(edad)}
+            />
+            <TextInput
+                placeholder="Sexo del animal . . ."
+                onChangeText={(sexo) => setSexo(sexo)}
+            />
+            <TextInput
+                placeholder="Raza . . ."
+                onChangeText={(raza) => setRaza(raza)}
+            />
+            <Button title="Publicar" onPress={() => uploadImage()} />
         </View>
     )
 }
