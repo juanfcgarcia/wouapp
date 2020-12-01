@@ -8,63 +8,68 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { fetchUsersData } from '../../redux/actions/index'
 
-function Comment(props) {
-    const [comments, setComments] = useState([])
+function Solicitud(props) {
+    const [solicitudes, setSolicitudes] = useState([])
     const [postId, setPostId] = useState("")
     const [text, setText] = useState("")
+    const [ciudad, setCiudad] = useState("")
+    const [telefono, setTelefono] = useState("")
+    const [id, setId] = useState("")
 
     useEffect(() => {
 
-        function matchUserToComment(comments) {
-            for (let i = 0; i < comments.length; i++) {
-                if (comments[i].hasOwnProperty('user')) {
+        function matchUserToComment(solicitudes) {
+            for (let i = 0; i < solicitudes.length; i++) {
+                if (solicitudes[i].hasOwnProperty('user')) {
                     continue;
                 }
 
-                const user = props.users.find(x => x.uid === comments[i].creator)
+                const user = props.users.find(x => x.uid === solicitudes[i].creator)
                 if (user == undefined) {
-                    props.fetchUsersData(comments[i].creator, false)
+                    props.fetchUsersData(solicitudes[i].creator, false)
                 } else {
-                    comments[i].user = user
+                    solicitudes[i].user = user
                 }
             }
-            setComments(comments)
+            setSolicitudes(solicitudes)
         }
-
-
+        
+        console.log(props.route.params.postId);
         if (props.route.params.postId !== postId) {
             firebase.firestore()
                 .collection('posts')
                 .doc(props.route.params.uid)
                 .collection('userPosts')
                 .doc(props.route.params.postId)
-                .collection('comments')
+                .collection('solicitudes')
                 .get()
                 .then((snapshot) => {
-                    let comments = snapshot.docs.map(doc => {
+                    let solicitudes = snapshot.docs.map(doc => {
                         const data = doc.data();
                         const id = doc.id;
                         return { id, ...data }
                     })
-                    matchUserToComment(comments)
+                    matchUserToComment(solicitudes)
                 })
             setPostId(props.route.params.postId)
         } else {
-            matchUserToComment(comments)
+            matchUserToComment(solicitudes)
         }
     }, [props.route.params.postId, props.users])
 
 
-    const onCommentSend = () => {
+    const onSolicitudSend = () => {
         firebase.firestore()
             .collection('posts')
             .doc(props.route.params.uid)
             .collection('userPosts')
             .doc(props.route.params.postId)
-            .collection('comments')
+            .collection('solicitudes')
             .add({
                 creator: firebase.auth().currentUser.uid,
-                text
+                text,
+                ciudad,
+                telefono
             })
     }
 
@@ -73,41 +78,28 @@ function Comment(props) {
             <FlatList
                 numColumns={1}
                 horizontal={false}
-                data={comments}
-                
+                data={solicitudes}
                 renderItem={({ item }) => (
                     <View>
-                        {item.user !== undefined ?
-                            <Text>
-                                {item.user.name}
-                            </Text>
-                            : null}
-                        <Text>{item.text}</Text>
-               
-                        
+                       
                     </View>
-                    
                 )}
             />
-
+              
             <View>
                 <TextInput
-                    placeholder='ingresa tus datos...'
+                    placeholder='Nombre'
                     onChangeText={(text) => setText(text)} />
+                     <TextInput
+                    placeholder='Ciudad'
+                    onChangeText={(ciudad) => setCiudad(ciudad)} />
+                    <TextInput
+                    placeholder='Telefono'
+                    onChangeText={(Telefono) => setTelefono(Telefono)} />
                 <Button
-                    onPress={() => onCommentSend()}
-                    title="Enviar Solicitud"
+                    onPress={() => onSolicitudSend()}
+                    title="Realizar Solicitud"
                 />
-            </View>
-            <View>
-          
-           
-                  
-                        <Text>{postId}</Text>
-               
-                  
-            
-                
             </View>
 
         </View>
@@ -120,4 +112,4 @@ const mapStateToProps = (store) => ({
 })
 const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUsersData }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchProps)(Comment);
+export default connect(mapStateToProps, mapDispatchProps)(Solicitud);

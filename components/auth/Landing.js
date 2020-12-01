@@ -1,7 +1,12 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView,Image, Dimensions, TouchableOpacity, Button } from 'react-native'
+import { Linking } from 'react-native';
+
 
 export default function Landing({ navigation }) {
+    const sendEmail = async () => {
+        await Linking.openURL("mailto:u1201610@unimilitar.edu.co?subject=ASUNDO PRUEBA&body=este es el contenido")
+    }
     return (
         
         <View style={styles.prueba}>
@@ -13,12 +18,13 @@ export default function Landing({ navigation }) {
                         />
                   
                 </View>
+                <Text> </Text>
             <Button
                 title="Registrarse"
-                onPress={() => navigation.navigate("Register")} />
+                onPress={() => navigation.navigate("Registro")} />
             <Button style={styles.btn}
                 title="Iniciar sesión"
-                onPress={() => navigation.navigate("Login")} />
+                onPress={() => navigation.navigate("Login")} />        
         </View>
         
     )

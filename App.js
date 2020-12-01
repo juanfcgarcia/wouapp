@@ -31,12 +31,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import LandingScreen from './components/auth/Landing'
-import RegisterScreen from './components/auth/Register'
+import RegisterScreen from './components/auth/Registro'
 import LoginScreen from './components/auth/Login'
 import MainScreen from './components/Main'
 import AddScreen from './components/main/Add'
 import SaveScreen from './components/main/Save'
-import SolicitudScreen from './components/Main/Solicitud'
+import SolicitudScreen from './components/main/Solicitud'
 
 const Stack = createStackNavigator();
 
@@ -79,7 +79,7 @@ export class App extends Component {
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Landing">
             <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Registro" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
           </Stack.Navigator>
         </NavigationContainer>
