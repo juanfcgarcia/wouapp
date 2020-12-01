@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, Button, TextInput } from 'react-native'
+import { View, Text, FlatList, Button, TextInput, StyleSheet, Dimensions } from 'react-native'
+
+const width_proportion = '80%';
 
 import firebase from 'firebase'
 require('firebase/firestore')
@@ -71,40 +73,70 @@ function Solicitud(props) {
                 ciudad,
                 telefono
             })
+            props.navigation.navigate('Feed')        
     }
 
     return (
-        <View>
-            <FlatList
-                numColumns={1}
-                horizontal={false}
-                data={solicitudes}
-                renderItem={({ item }) => (
-                    <View>
-                       
-                    </View>
-                )}
-            />
-              
-            <View>
+        <View style={styles.prueba}>
+            
                 <TextInput
                     placeholder='Nombre'
+                    style={styles.btn}
                     onChangeText={(text) => setText(text)} />
                      <TextInput
                     placeholder='Ciudad'
+                    style={styles.btn}
                     onChangeText={(ciudad) => setCiudad(ciudad)} />
                     <TextInput
                     placeholder='Telefono'
+                    style={styles.btn}
                     onChangeText={(Telefono) => setTelefono(Telefono)} />
                 <Button
                     onPress={() => onSolicitudSend()}
                     title="Realizar Solicitud"
                 />
-            </View>
+          
 
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    
+    prueba: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#2e3192ff'
+    },
+    btn: {
+        borderRadius: 18,
+        backgroundColor: '#FFFFFF',
+        marginBottom:5,
+        fontSize: 19,
+        width: width_proportion,
+        height: 40
+      },
+    card:{
+        borderRadius: 6,
+        elevation: 3,
+        shadowOffset: {width:1, height:1},
+        shadowColor: '#333',
+        margin: 20,
+        
+    },
+    cardContent:{
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    images:{
+        
+        width:200,
+        height:140
+        
+    }
+  
+  })
 
 
 const mapStateToProps = (store) => ({

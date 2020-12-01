@@ -9,7 +9,7 @@ require("firebase/firebase-storage")
 const width_proportion = '90%';
 
 
-export default function Save(props) {
+export default function Guardar(props) {
     const [caption, setCaption] = useState("")
     const [edad, setEdad] = useState("")
     const [raza, setRaza] = useState("")
